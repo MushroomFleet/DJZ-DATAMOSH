@@ -12,7 +12,7 @@ Built with Tauri (Rust + WebView2) for lightweight, portable Windows distributio
 
 ## Download
 
-Grab the latest release from the [Releases](https://github.com/MushroomFleet/DJZ-DATAMOSH-dev/releases) page:
+Grab the latest release from the [Releases](https://github.com/MushroomFleet/DJZ-DATAMOSH/releases) page:
 
 - **`DJZ-DATAMOSH_x64-setup.exe`** — NSIS installer (recommended)
 - **`DJZ-DATAMOSH_x64_en-US.msi`** — MSI installer for managed deployments
@@ -34,7 +34,7 @@ No dependencies to install. Just run the installer and launch.
 | 7 | **Pixel Sort (Advanced)** | Multi-mode pixel sorting (luminance / hue / saturation / laplacian) with rotation and multi-pass options. |
 | 8 | **Pixel Sort (Masked)** | Same as Advanced but with mask support — paint a mask manually, generate from luminance threshold, or use MODNet AI for automatic portrait segmentation. |
 
-All effects are JavaScript ports of the [DJZ Datamosh ComfyUI custom nodes](glitch-nodes/) (V1–V8).
+All effects are JavaScript ports of the [DJZ Datamosh ComfyUI custom nodes](https://github.com/MushroomFleet/DJZ-Nodes) (V1–V8).
 
 ---
 
@@ -79,56 +79,6 @@ This project uses the **TINS** (There Is No Source) methodology — comprehensiv
 ### TINS Plans Included
 
 - **`DJZ-DataMosh-TINS-plan.md`** — Full specification for the 8-effect datamosh application: UI layout, data models, all algorithms with complete JavaScript code, IndexedDB storage, ZIP export, and accessibility requirements.
-- **`DJZ-CropReplacer-plan.md`** — Specification for the companion CropReplacer tool (Gemini API image editing).
-- **`stage1-incomplete-steps.md`** — Gap analysis and completion checklist used during development.
-
-### Building from Source
-
-**Prerequisites:** Rust toolchain, Node.js, and the Tauri CLI.
-
-```bash
-# Install Tauri CLI (one-time)
-cargo install tauri-cli --version "^2"
-
-# Clone the repo
-git clone https://github.com/MushroomFleet/DJZ-DATAMOSH-dev.git
-cd DJZ-DATAMOSH-dev
-
-# Copy web assets to dist/
-mkdir -p dist/ort-wasm
-cp index.html jszip.min.js ort.min.js dist/
-cp ort-wasm/*.wasm dist/ort-wasm/
-
-# Build
-cargo tauri build
-```
-
-Outputs appear in `src-tauri/target/release/bundle/`:
-- `nsis/DJZ-DATAMOSH_<version>_x64-setup.exe`
-- `msi/DJZ-DATAMOSH_<version>_x64_en-US.msi`
-
-Or use the included build script:
-
-```bash
-bash build.sh
-```
-
-### Project Structure
-
-```
-index.html              Main application (single-file, all JS/CSS inlined)
-jszip.min.js            JSZip library (ZIP creation)
-ort.min.js              ONNX Runtime Web (MODNet AI masking)
-ort-wasm/               ONNX WASM backends
-glitch-nodes/           Original Python ComfyUI nodes (V1-V8) for reference
-src-tauri/              Tauri v2 Rust backend
-  Cargo.toml            Rust dependencies (tauri, tauri-plugin-http)
-  tauri.conf.json       App config (window, bundle, security)
-  capabilities/         Permission scopes (HTTP for model download)
-  src/lib.rs            Minimal Rust entry point
-DJZ-DataMosh-TINS-plan.md    TINS specification
-build.sh                One-command build script
-```
 
 ---
 
